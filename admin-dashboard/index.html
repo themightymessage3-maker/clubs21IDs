@@ -1,1 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <h1 class="admin-title">Admin Panel</h1>
 
+        <div class="admin-panel">
+            <!-- Vertical Sidebar Tabs -->
+            <aside class="admin-sidebar">
+                <div class="admin-sidebar-header">
+                    <div class="admin-avatar">AD</div>
+                    <div class="admin-meta">
+                        <div class="admin-username">Administrator</div>
+                        <div class="admin-sub">Signed in</div>
+                    </div>
+                </div>
+                <nav class="admin-tabs-vertical" aria-label="Admin navigation">
+                    <button class="tab-link active" onclick="openTab(event, 'orders')">All Orders</button>
+                    <button class="tab-link" onclick="openTab(event, 'manageProducts')">Manage Catalog</button>
+                    <button class="tab-link" onclick="openTab(event, 'settings')">Settings</button>
+                </nav>
+                <div class="admin-sidebar-footer">
+                    <button id="admin-logout" class="btn btn-ghost">Log out</button>
+                </div>
+            </aside>
+
+            <!-- Main content area -->
+            <main class="admin-main">
+                <!-- All Orders Tab -->
+                <div id="orders" class="tab-content" style="display: block;">
+            <h2>All User Orders</h2>
+            <div id="all-orders-container">
+                <!-- Orders will be dynamically loaded here -->
+                <p>Loading orders...</p>
+            </div>
+        </div>
+
+        <!-- Manage Products Tab -->
+        <div id="manageProducts" class="tab-content">
+            <h2>Manage Order Page Items (Catalog)</h2>
+            <p class="muted">Manage items shown on the public Order page — add, edit, or delete products. Changes take effect immediately.</p>
+
+            <div class="setting-item">
+                <h3>Add / Edit Item</h3>
+                <form id="product-editor-form" class="product-editor-form">
+                    <input type="hidden" id="prod-index" value="">
+                    <div class="product-editor-row">
+                        <input id="prod-name" class="form-input" placeholder="Product name" required>
+                        <input id="prod-price" class="form-input form-input-small" placeholder="Price" required type="number" step="0.01">
+                        <div style="display:flex;flex-direction:column;gap:0.4rem;min-width:220px;">
+                            <input id="prod-img-file" type="file" accept="image/*" class="form-input" style="padding:0.2rem;" />
+                            <input id="prod-img" type="hidden" class="form-input" placeholder="Image path or URL" required>
+                            <img id="prod-img-preview" src="" alt="Preview" style="display:none;width:100%;height:88px;object-fit:cover;border-radius:6px;border:1px solid #eee;" />
+                        </div>
+                        <select id="prod-category" class="form-input form-input-medium">
+                            <option value="">Select category</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save Item</button>
+                        <button type="button" id="prod-reset" class="btn btn-secondary">Reset</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="setting-item" style="margin-top:1rem;">
+                <h3>Existing Items</h3>
+                <div id="product-list" class="product-list-grid">
+                    <p>Loading catalog...</p>
+                </div>
+            </div>
+        </div>
+
+                <!-- Settings Tab -->
+                <div id="settings" class="tab-content">
+            <h2>Site Settings</h2>
+            <div class="setting-item">
+                <h3>Update Bitcoin Address</h3>
+                <p>Current Address: <span id="current-btc-address">Loading...</span></p>
+                <form id="update-btc-form">
+                    <input type="text" id="new-btc-address" placeholder="Enter new Bitcoin address" required>
+                    <button type="submit">Update Address</button>
+                </form>
+                <p id="settings-update-status"></p>
+            </div>
+            
+            <div class="setting-item" style="margin-top:1.5rem;">
+                <h3>Update Admin Login Details</h3>
+                <p>Change the admin username and/or password used to log into the admin panel.</p>
+
+                <div class="admin-creds-card">
+                    <form id="update-admin-creds-form" class="admin-creds-form" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="new-admin-username" class="form-label">New username</label>
+                                <input type="text" id="new-admin-username" class="form-input" placeholder="e.g. admin">
+                            </div>
+
+                            <div class="form-group">
+                                    <label for="new-admin-password" class="form-label">New password</label>
+                                    <div class="input-with-toggle">
+                                        <input type="password" id="new-admin-password" class="form-input" placeholder="Enter new password">
+                                        <button type="button" class="toggle-password-btn" data-target="new-admin-password" aria-pressed="false" aria-label="Show password">Show</button>
+                                    </div>
+                                </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group" style="flex: 1 1 auto;">
+                                <label for="new-admin-password-confirm" class="form-label">Confirm password</label>
+                                <div class="input-with-toggle">
+                                    <input type="password" id="new-admin-password-confirm" class="form-input" placeholder="Confirm new password">
+                                    <button type="button" class="toggle-password-btn" data-target="new-admin-password-confirm" aria-pressed="false" aria-label="Show confirm password">Show</button>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Update Admin Credentials</button>
+                            </div>
+                        </div>
+
+                        <p id="admin-creds-status" class="status-msg" aria-live="polite"></p>
+                    </form>
+                </div>
+
+            </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
